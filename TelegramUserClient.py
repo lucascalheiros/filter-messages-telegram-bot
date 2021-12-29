@@ -15,11 +15,11 @@ class TelegramUserClient:
         self.filter_and_foward_message = filter_and_foward_message
 
     def start(self):
-        self.__do_start()
+        self.__do_start__()
         # if not self.started:
         #     Thread(target=self.__do_start, args=(), daemon=True).start()
 
-    def __do_start(self):
+    def __do_start__(self):
         self.client = TelegramClient('lucas', API_ID, API_HASH)
 
         @self.client.on(events.NewMessage)
