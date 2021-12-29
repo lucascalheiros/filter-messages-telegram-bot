@@ -1,0 +1,3 @@
+python-telegram-bot==13.9
+SQLAlchemy==1.4.29
+Telethon==1.24.0
