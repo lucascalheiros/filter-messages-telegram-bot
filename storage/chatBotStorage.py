@@ -1,4 +1,4 @@
-from storage.database import get_database_session
+from storage.database import get_database_session, insert_or_update
 from storage.tables import ChatBot
 
 
@@ -7,7 +7,7 @@ class ChatBotStorage:
         self.session = get_database_session()
 
     def get_all(self):
-        self.session.query(ChatBot).all()
+        return self.session.query(ChatBot).all()
 
     def insert(self, chat_bot: ChatBot):
-        self.session.add(chat_bot)
+        insert_or_update(chat_bot, self.session)

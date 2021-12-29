@@ -1,4 +1,4 @@
-from storage.database import get_database_session
+from storage.database import get_database_session, insert_or_update
 from storage.tables import ChatMessage
 
 
@@ -7,7 +7,7 @@ class ChatMessageStorage:
         self.session = get_database_session()
 
     def get_all(self):
-        self.session.query(ChatMessage).all()
+        return self.session.query(ChatMessage).all()
 
-    def insert(self, chat_bot: ChatMessage):
-        self.session.add(chat_bot)
+    def insert(self, chat_message: ChatMessage):
+        insert_or_update(chat_message, self.session)

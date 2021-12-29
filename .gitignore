@@ -6,3 +6,10 @@ __pycache__/*
 lucas.session
 .ideia/*
 storage/__pycache__/*
+.idea/.gitignore
+.idea/dataSources.xml
+.idea/filter-messages-telegram-bot.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
