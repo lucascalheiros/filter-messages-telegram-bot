@@ -1,35 +1,29 @@
-import logging
 import string
 from time import sleep
 
 from TelegramBotClient import TelegramBotClient
 from TelegramUserClient import TelegramUserClient
-from storage.chatMessageStorage import ChatMessageStorage
 from storage.chatBotStorage import ChatBotStorage
 import re
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-
-chatBotStorage = ChatBotStorage()
-
-botClient = TelegramBotClient(chatBotStorage)
-
-
-def filter_and_foward_message(message: string):
-    print(message)
-    for botChat in chatBotStorage.get_all():
-        pattern = re.compile(botChat.filter, re.IGNORECASE)
-        if pattern.match(message.replace('\n', ' ')):
-            botClient.send_message(botChat.chat_id, message)
+def filter_and_foward_message(send_message_func):
+    def do_filter_and_foward(message: string):
+        print(message)
+        for botChat in ChatBotStorage().get_all():
+            pattern = re.compile(botChat.filter, re.IGNORECASE)
+            if pattern.match(message.replace('\n', ' ')):
+                send_message_func(botChat.chat_id, message)
+    return do_filter_and_foward
 
 
-userClient = TelegramUserClient(ChatMessageStorage(), filter_and_foward_message)
+def main():
+    botClient = TelegramBotClient()
 
-botClient.start()
-userClient.start()
+    userClient = TelegramUserClient(filter_and_foward_message(botClient.send_message))
 
-while True:
-    sleep(5)
+    botClient.start()
+    
+    userClient.start()
 
-# print(f"teste #{chat_id}")
-# Thread(target=self.__itermitant_message_sender, args=(chat_id,), daemon=True).start()
+if __name__ == "__main__":
+    main()

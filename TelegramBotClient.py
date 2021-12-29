@@ -11,9 +11,8 @@ from storage.tables import ChatBot
 
 class TelegramBotClient:
 
-    def __init__(self, chat_bot_storage: ChatBotStorage) -> None:
+    def __init__(self) -> None:
         self.started = False
-        self.chat_bot_storage = chat_bot_storage
 
     def start(self):
         if not self.started:

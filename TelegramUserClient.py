@@ -9,9 +9,8 @@ from storage.tables import ChatMessage
 
 class TelegramUserClient:
 
-    def __init__(self, chat_message_storage: ChatMessageStorage, filter_and_foward_message) -> None:
+    def __init__(self, filter_and_foward_message) -> None:
         self.started = False
-        self.chat_message_storage = chat_message_storage
         self.filter_and_foward_message = filter_and_foward_message
 
     def start(self):
