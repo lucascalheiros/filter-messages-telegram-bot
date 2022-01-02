@@ -1,6 +1,8 @@
+import asyncio
 from threading import Thread
 
 from telethon import TelegramClient, events
+from telethon.tl.functions.channels import JoinChannelRequest
 
 from config import API_HASH, API_ID
 
@@ -24,5 +26,17 @@ class TelegramUserClient:
         self.client.start()
         self.client.run_until_disconnected()
 
-
-
+    def join_channel(self, channel_name: str):
+        async def do_join_channel():
+            try:
+                print(f'teste1 {channel_name}')
+                channel = await self.client.get_entity(f'https://t.me/joinchat/{channel_name}') 
+                print(f'teste2 {channel}')
+                await self.client(JoinChannelRequest(channel))
+                print('teste3')
+            except:
+                print('error')
+        print('teste0')
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(do_join_channel())

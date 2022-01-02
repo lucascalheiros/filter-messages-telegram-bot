@@ -10,6 +10,7 @@ class ChatBot(Base):
     chat_id = Column(Integer, primary_key=True)
     is_active = Column(Boolean)
     filter = Column(String)
+    channels = Column(String)
 
     def __repr__(self):
         return f'ChatBot {self.chat_id} active: {self.is_active}'

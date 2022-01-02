@@ -1,13 +1,13 @@
-import string
+import re
 from time import sleep
 
+from storage.chatBotStorage import ChatBotStorage
 from TelegramBotClient import TelegramBotClient
 from TelegramUserClient import TelegramUserClient
-from storage.chatBotStorage import ChatBotStorage
-import re
+
 
 def filter_and_foward_message(send_message_func):
-    def do_filter_and_foward(message: string):
+    def do_filter_and_foward(message: str):
         print(message)
         for botChat in ChatBotStorage().get_all():
             pattern = re.compile(botChat.filter, re.IGNORECASE)
@@ -20,6 +20,8 @@ def main():
     botClient = TelegramBotClient()
 
     userClient = TelegramUserClient(filter_and_foward_message(botClient.send_message))
+
+    botClient.set_join_function(userClient.join_channel)
 
     botClient.start()
     
